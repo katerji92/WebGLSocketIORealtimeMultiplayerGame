@@ -2,6 +2,18 @@
 var player1Bar;
 var player2Bar;
 
+var gameState = {
+    paused : true,
+    ballPosition : {
+      x:0,
+      y:0
+    },
+    player1Y:0,
+    player2Y:0,
+    player1Score:0,
+    player2Score:0
+  };
+
 var scene;
 document.addEventListener("DOMContentLoaded", function(event) {
   
@@ -81,3 +93,22 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 
 });
+
+/**
+*  Module
+*
+* Description
+*/
+  var app = angular.module('realtimeChatClient');
+  app.controller('PongCntrl', ['$scope', 'GameState', 'chatSocket', function($scope, GameState, chatSocket){
+
+    setInterval(function(){
+      GameState.save(gameState)
+    },25);
+
+    chatSocket.on('gameStateChange', function(gameState){
+      gameState = gameState;
+    })
+  }])
+
+  
